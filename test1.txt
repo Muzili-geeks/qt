@@ -1,0 +1,36 @@
+#include "thread.h"
+extern int _g_call_flag;
+
+Thread::Thread(Mycall *mycall)
+{
+    my_call = mycall;
+    static pj_thread_desc desc;
+    pj_thread_t* pthread = nullptr;
+    if(!pj_thread_is_registered()){
+    qDebug("789");
+       pj_thread_register(nullptr, desc,&pthread);
+
+    }
+}
+void Thread::run(){
+    while (1) {
+       static pj_thread_desc desc;
+pj_thread_t* pthread = nullptr;
+if(!pj_thread_is_registered()){
+
+   pj_thread_register(nullptr, desc,&pthread);
+
+}
+            if(_g_call_flag == 1){
+qDebug("456");
+            my_call->call("1013",0);
+            _g_call_flag = 0;
+        }
+
+        usleep(50);
+
+    }
+}
+void Thread::input_zx(int x){
+    my_queue.enqueue(x);
+}
